@@ -3,6 +3,7 @@ package com.example.social_network.users;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -21,12 +22,17 @@ public class UserService {
   }
 
   public User findOne(int id) {
-    return users.stream().filter(u -> u.getId().equals(id)).findFirst().get();
+    return users.stream().filter(u -> u.getId().equals(id)).findFirst().orElse(null);
   }
 
   public User save(User user) {
     user.setId(++userCount);
     users.add(user);
     return user;
+  }
+
+  public void deleteById(int id) {
+    Predicate<? super User> predicate = u -> u.getId().equals(id);
+    users.removeIf(predicate);
   }
 }

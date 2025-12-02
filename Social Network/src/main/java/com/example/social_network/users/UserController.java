@@ -1,6 +1,7 @@
 package com.example.social_network.users;
 
 import com.example.social_network.exception.UserNotFoundException;
+import jakarta.validation.Valid;
 import java.net.URI;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -37,7 +38,7 @@ public class UserController {
   }
 
   @PostMapping
-  public ResponseEntity<Object> createUser(@RequestBody User user) {
+  public ResponseEntity<Object> createUser(@Valid @RequestBody User user) {
     User createdUser = userService.save(user);
     URI location =
         ServletUriComponentsBuilder.fromCurrentRequest()
